@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Face Attendance System</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(135deg, #3498db, #9b59b6);
+            margin: 0;
+            padding: 0;
+            color: #fff;
+        }
+
+        .navbar {
+            background: linear-gradient(45deg, #2c3e50, #34495e);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: background 0.3s ease;
+        }
+
+        .navbar:hover {
+            background: linear-gradient(45deg, #34495e, #2c3e50);
+        }
+
+        .navbar-brand {
+            color: #fff;
+            font-size: 2rem;
+            font-weight: 700;
+        }
+
+        .navbar-toggler-icon {
+            background-color: #fff;
+        }
+
+        .navbar-nav .nav-item {
+            margin: 0 15px;
+        }
+
+        .nav-link {
+            color: #fff;
+            font-size: 1.2rem;
+            transition: color 0.3s ease;
+        }
+
+        .nav-link:hover,
+        .nav-link:focus,
+        .nav-item.active .nav-link {
+            color: #ecf0f1;
+        }
+
+        .jumbotron {
+            background-color: rgba(255, 255, 255, 0.2);
+            color: #fff;
+            padding: 50px;
+            margin-bottom: 0;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            font-size: 3rem;
+            font-weight: 700;
+        }
+
+        .container {
+            margin-top: 40px;
+        }
+
+        .card {
+            background: linear-gradient(135deg, #fff, #ecf0f1);
+            border-radius: 15px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            color: #2c3e50;
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .card-title {
+            color: #3498db;
+        }
+
+        .card-body {
+            padding: 20px;
+        }
+
+        .form-label {
+            color: #3498db;
+        }
+
+        .btn-dark {
+            background: linear-gradient(45deg, #34495e, #2c3e50);
+            color: #fff;
+            border: none;
+            padding: 15px;
+            font-size: 1.5rem;
+            margin-top: 20px;
+            transition: background 0.3s ease;
+            border-radius: 5px;
+        }
+
+        .btn-dark:hover {
+            background: linear-gradient(45deg, #2c3e50, #273844);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                margin-top: 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">Attendance System</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="/">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/listusers">All Employees</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="jumbotron">
+        <h1>Employee Face Attendance System</h1>
+    </div>
+
+    {% if mess%}
+    <p class="text-center text-danger">{{ mess }}</p>
+    {% endif %}
+
+    <div class="container">
+        <div class="row">
+
+            <div class="col-md-12 col-lg-6">
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h2 class="card-title">Today's Attendance <i class="material-icons">assignment</i></h2>
+                        <a href="/start" class="btn btn-primary btn-lg btn-block">Take Attendance <i
+                                class="material-icons">beenhere</i></a>
+                        <table class="table table-bordered mt-4">
+                            <thead>
+                                <tr>
+                                    <th>S No</th>
+                                    <th>Name</th>
+                                    <th>ID</th>
+                                    <th>Time</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% if l %}
+                                {% for i in range(l) %}
+                                <tr>
+                                    <td>{{ i+1 }}</td>
+                                    <td>{{ names[i] }}</td>
+                                    <td>{{ rolls[i] }}</td>
+                                    <td>{{ times[i] }}</td>
+                                </tr>
+                                {% endfor %}
+                                {% endif %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-12 col-lg-6">
+                <div class="card mt-3">
+                    <div class="card-body">
+                        <form action='/add' method="POST" enctype="multipart/form-data">
+                            <h2 class="card-title">Add New Employee <i class="material-icons">control_point_duplicate</i>
+                            </h2>
+                            <div class="mb-3">
+                                <label for="newusername" class="form-label">Enter New Employee Name*</label>
+                                <input type="text" class="form-control" id="newusername" name='newusername' required>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="newuserid" class="form-label">Enter New Employee Id*</label>
+                                <input type="number" class="form-control" id="newuserid" name='newuserid' required>
+                            </div>
+                            <button type='submit' class='btn btn-dark btn-lg btn-block'>Add New Employee</button>
+                            <h5 class="mt-3"><i>Total Employees in Database: {{totalreg}}</i></h5>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</body>
+
+</html>

@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Details</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(to right, #536dfe, #00bfa5); /* Gradient background */
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            background-color: rgba(255, 255, 255, 0.95); /* Slightly transparent white background */
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            border-radius: 16px;
+            overflow: hidden;
+            width: 80%;
+            text-align: center;
+            padding: 30px;
+            animation: fadeIn 0.5s ease-out;
+            display: flex;
+            flex-direction: row;
+        }
+
+        .profile-pic {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            margin-bottom: 20px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .employee-card,
+        .attendance-history {
+            flex: 1;
+            text-align: left;
+            padding: 20px;
+        }
+
+        .employee-card h2,
+        .attendance-history h3 {
+            color: #1a237e; /* Deep Indigo color */
+            margin-top: 20px;
+        }
+
+        .employee-details p {
+            margin: 5px 0;
+            color: #333;
+        }
+
+        .attendance-status p {
+            font-size: 1.2rem;
+            margin-top: 10px;
+        }
+
+        .present,
+        .badge-present {
+            color: #00e676; /* Light Green color */
+        }
+
+        .absent,
+        .badge-absent {
+            color: #ff1744; /* Vivid Red color */
+        }
+
+        .attendance-history table {
+            margin-top: 20px;
+            width: 100%;
+            background-color: #fff; /* White background for the table */
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .table-bordered {
+            border: 1px solid #dee2e6;
+            border-radius: 12px;
+        }
+
+        .table thead th {
+            background-color: #1a237e;
+            color: #fff;
+            border-radius: 12px;
+        }
+
+        .badge {
+            padding: 8px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        {% if error_message %}
+        <h2 class="text-danger">{{ error_message }}</h2>
+        {% else %}
+        <div class="employee-card">
+            <img src="{{ url_for('static', filename='profile.jpg') }}" alt="Profile" class="profile-pic">
+
+            <h2>Employee Details</h2>
+            <div class="employee-details">
+                <p><strong>Name:</strong> {{ name }}</p>
+                <p><strong>ID:</strong> {{ id }}</p>
+                <p><strong>Joining Date:</strong> {{ joining_date }}</p>
+            </div>
+            <hr>
+
+            <div class="attendance-status">
+                {% if today_present %}
+                <p class="present">Present today</p>
+                {% else %}
+                <p class="absent">Absent today</p>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="attendance-history">
+            <h3>Attendance History</h3>
+            <table class="table table-bordered">
+               <thead>
+    <tr>
+        <th>Date</th>
+        <th>Time</th>
+        <th>Status</th>
+    </tr>
+</thead>
+<tbody>
+    {% for attendance_record in attendance_history %}
+    <tr>
+        <td>{{ attendance_record.date }}</td>
+        <td>{{ attendance_record.time }}</td>
+        <td>
+            {% if attendance_record.present %}
+            <span class="badge badge-present">Present</span>
+            {% else %}
+            <span class="badge badge-absent">Absent</span>
+            {% endif %}
+        </td>
+    </tr>
+    {% endfor %}
+</tbody>
+            </table>
+        </div>
+        {% endif %}
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,7 @@
+Name: Pawan Kumar
+Employee ID: 1
+Time: 11:59:22
+Joining Date: 2023-12-01
+Time: 12:03:00
+Time: 12:08:39
+Time: 12:35:58
