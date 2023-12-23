@@ -1,7 +1,7 @@
 # Employee_Face_Recogination
 
-Overview
-This Flask-based Employee Face Recognition Attendance System is designed to streamline attendance management using face recognition technology. The system allows users to add, list, and delete employees, and it provides real-time attendance tracking through a webcam. The application stores attendance records in CSV files and maintains employee details, including images and relevant information, in dedicated directories.
+
+ Employee Face Recognition Attendance System is designed to streamline attendance management using face recognition technology. The system allows users to add, list, and delete employees, and it provides real-time attendance tracking through a webcam. The application stores attendance records in CSV files and maintains employee details, including images and relevant information, in dedicated directories.
 
 Features
 Face Recognition: Utilizes OpenCV and scikit-learn's K-Nearest Neighbors algorithm for face detection and recognition.
